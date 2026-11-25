@@ -26,7 +26,6 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
-app.MapGet("/", () => Results.Redirect("/api/movies/"));
 app.MapMoviesEndpoints();
 app.UseHttpsRedirection();
 app.UseAuthorization();

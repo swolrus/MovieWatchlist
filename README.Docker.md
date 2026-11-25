@@ -3,15 +3,21 @@
 When you're ready, start your application by running:
 `docker compose up --build`.
 
+Set `POSTGRES_PASSWORD` before starting Compose. You can export it in your shell
+or put it in a root `.env` file (which is ignored by Git):
+
+```sh
+POSTGRES_PASSWORD=choose-a-strong-password
+```
+
 The API will be available at http://localhost:8080. Opening the root URL redirects
 to the movie collection at http://localhost:8080/api/movies/.
 The Compose service runs in Development mode, with the Scalar API reference at
 http://localhost:8080/scalar and the OpenAPI document at
 http://localhost:8080/openapi/v1.json.
-PostgreSQL is available on localhost:5432 for host-run EF Core commands. Set
-`POSTGRES_PASSWORD` to the same password used by your local connection string
-before running migrations from the host. Inside Compose, the API connects to the
-database using the `db` service name, and waits for PostgreSQL to become healthy.
+PostgreSQL is available on localhost:5432 for host-run EF Core commands. Inside
+Compose, the API connects to the database using the `db` service name, and waits
+for PostgreSQL to become healthy.
 
 ### Deploying your application to the cloud
 
