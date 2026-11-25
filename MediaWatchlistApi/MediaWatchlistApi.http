@@ -1,0 +1,11 @@
+@MediaWatchlistApi_HostAddress = http://localhost:5233
+
+GET {{MediaWatchlistApi_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{MediaWatchlistApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
