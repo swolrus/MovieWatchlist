@@ -10,13 +10,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MediaWatchlistApi.Migrations;
 
-[DbContext(typeof(ApplicationDbContext))]
+[DbContext(typeof(AppDbContext))]
 partial class ApplicationDbContextModelSnapshot : ModelSnapshot
 {
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261125074949_InitialCreate";
+    public override string LastMigrationId => "20261125150124_AddUserAuthentication";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
@@ -58,6 +58,74 @@ partial class ApplicationDbContextModelSnapshot : ModelSnapshot
                 b.HasKey("Id");
 
                 b.ToTable("Movies");
+            });
+
+        modelBuilder.Entity("MediaWatchlistApi.Models.RefreshToken", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<DateTime>("ExpiresAtUtc")
+                    .HasColumnType("timestamp with time zone");
+
+                b.Property<string>("Token")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.Property<Guid>("UserId")
+                    .HasColumnType("uuid");
+
+                b.HasKey("Id");
+
+                b.HasIndex("Token")
+                    .IsUnique();
+
+                b.HasIndex("UserId");
+
+                b.ToTable("RefreshTokens");
+            });
+
+        modelBuilder.Entity("MediaWatchlistApi.Models.User", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.Property<string>("PasswordHash")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.Property<string>("Role")
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                b.HasKey("Id");
+
+                b.HasIndex("Email")
+                    .IsUnique();
+
+                b.ToTable("Users");
+            });
+
+        modelBuilder.Entity("MediaWatchlistApi.Models.RefreshToken", b =>
+            {
+                b.HasOne("MediaWatchlistApi.Models.User", "User")
+                    .WithMany("RefreshTokens")
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("User");
+            });
+
+        modelBuilder.Entity("MediaWatchlistApi.Models.User", b =>
+            {
+                b.Navigation("RefreshTokens");
             });
 #pragma warning restore 612, 618
     }

@@ -7,9 +7,9 @@ using MediaWatchlistApi.Application;
 namespace MediaWatchlistApi.Services;
 public class MovieService : IMovieService
 {
-	private readonly ApplicationDbContext _context;
+	private readonly AppDbContext _context;
 
-	public MovieService(ApplicationDbContext context)
+	public MovieService(AppDbContext context)
 	{
 		_context = context;
 	}

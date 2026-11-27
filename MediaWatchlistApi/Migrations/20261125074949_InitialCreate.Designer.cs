@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MediaWatchlistApi.Migrations;
 
-[DbContext(typeof(ApplicationDbContext))]
+[DbContext(typeof(AppDbContext))]
 [Migration("20261125074949_InitialCreate")]
 partial class _20261125074949_InitialCreate
 {

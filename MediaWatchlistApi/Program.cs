@@ -9,7 +9,8 @@ var configuration = builder.Configuration;
 builder.Services.AddAppDbContext(configuration)
     .AddServices()
     .AddAuthorization()
-    .AddValidators();
+    .AddValidators()
+    .AddHasher(builder);
 
 builder.Services.AddOpenApi();
 // 2. Register FluentValidation rules for OpenAPI
@@ -27,12 +28,13 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 app.MapMoviesEndpoints();
+app.MapUserEndpoints();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await dbContext.Database.MigrateAsync();
 }
 
